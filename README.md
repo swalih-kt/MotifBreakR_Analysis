@@ -52,7 +52,7 @@ snps <- snps.from.file(
 **Step 3 — Load Motif PWMs (JASPAR 2024)**
 human.jaspar2024 <- query(MotifDb, c("jaspar2024", "Hsapiens"))
 
-Step 5 — Run MotifBreakR
+**Step 5 — Run MotifBreakR**
 results <- motifbreakR(
   snpList = snps,
   filterp = TRUE,
