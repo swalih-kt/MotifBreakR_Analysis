@@ -37,30 +37,37 @@ library(BSgenome)
 
 
 
-🔹 Example
-./gnomad_query.sh --vl my_variants.txt --data-type exome
+Step 3 — Read Variants from BED File
+snps <- snps.from.file(
+  file = "Motif_Breaker - SKT.bed",
+  format = "bed",
+  dbSNP = SNPlocs.Hsapiens.dbSNP155.GRCh38,
+  search.genome = BSgenome.Hsapiens.UCSC.hg38,
+  check.unnamed.for.rsid = TRUE
+)
 
+Step 4 — Load Motif PWMs (JASPAR 2024)
+human.jaspar2024 <- query(MotifDb, c("jaspar2024", "Hsapiens"))
 
-⚙️ Options
-Option	Description
---vl	Variant list file (one variant per line)
---data-type	Dataset type: exome, genome, or joint
---help	Show help message
+Step 5 — Run MotifBreakR
+results <- motifbreakR(
+  snpList = snps,
+  filterp = TRUE,
+  pwmList = human.jaspar2024,
+  threshold = 1e-4,
+  method = "log",
+  bkg = c(A=.25, C=.25, G=.25, T=.25),
+  BPPARAM = BiocParallel::SerialParam()
+)
 
+Step 6 — Export Results to TSV
+df_results <- as.data.frame(results, row.names = NULL)
+df_results[] <- lapply(df_results, function(col)
+  if (is.list(col)) sapply(col, paste, collapse = ";") else col)
+write.table(df_results, "motifbreakr_results.tsv", sep="\t",
+            quote = FALSE, row.names = FALSE)
 
-
-📄 Input Example
-1-55516888-G-A
-2-1234567-T-C
-10-8965432-C-T
-
-📁 Output
-
-All queried variants are saved in:
-
-varStore/<variant_id>.json
-
-
-Example:
-
-varStore/1-55516888-G-A.json
+🔍 Optional: Examine / Visualize a Single Variant
+rsV <- results[names(results) %in% "rs1479475149"]
+rsV <- calculatePvalue(rsV)
+plotMB(results = results, rsid = "rs1479475149", effect = "strong")
