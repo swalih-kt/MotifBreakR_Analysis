@@ -28,7 +28,13 @@ It reads a BED-style variant file, extracts alleles automatically, evaluates TF 
 
 ### **Step 1 — Load Required Libraries**
 ```R
-./varID_query_gnomAD.sh --vl variants.txt --data-type <exome|genome|joint>
+library(motifbreakR)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(GenomicRanges)
+library(MotifDb)
+library(BiocParallel)
+library(BSgenome)
+
 
 
 🔹 Example
