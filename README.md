@@ -29,7 +29,7 @@ It reads a BED-style variant file, extracts alleles automatically, evaluates TF 
 
 
 ### **Steps**
-
+**Step 1 — Load Required Libraries**
 library(motifbreakR)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(GenomicRanges)
@@ -37,8 +37,8 @@ library(MotifDb)
 library(BiocParallel)
 library(BSgenome)
 
-### **Step 1 — Load Required Libraries**
-**Step 3 — Read Variants from BED File**
+
+**Step 2 — Read Variants from BED File**
 
 snps <- snps.from.file(
   file = "Motif_Breaker - SKT.bed",
@@ -48,7 +48,7 @@ snps <- snps.from.file(
   check.unnamed.for.rsid = TRUE
 )
 
-**Step 4 — Load Motif PWMs (JASPAR 2024)**
+**Step 3 — Load Motif PWMs (JASPAR 2024)**
 human.jaspar2024 <- query(MotifDb, c("jaspar2024", "Hsapiens"))
 
 Step 5 — Run MotifBreakR
@@ -62,7 +62,7 @@ results <- motifbreakR(
   BPPARAM = BiocParallel::SerialParam()
 )
 
-**Step 6 — Export Results to TSV**
+**Step 4 — Export Results to TSV**
 df_results <- as.data.frame(results, row.names = NULL)
 df_results[] <- lapply(df_results, function(col)
   if (is.list(col)) sapply(col, paste, collapse = ";") else col)
