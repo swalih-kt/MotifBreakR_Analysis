@@ -26,8 +26,10 @@ It reads a BED-style variant file, extracts alleles automatically, evaluates TF 
 
 ## 🚀 Workflow
 
-### **Step 1 — Load Required Libraries**
-```R
+
+
+### **Steps**
+
 library(motifbreakR)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(GenomicRanges)
@@ -35,7 +37,7 @@ library(MotifDb)
 library(BiocParallel)
 library(BSgenome)
 
-
+### **Step 1 — Load Required Libraries**
 **Step 3 — Read Variants from BED File**
 
 snps <- snps.from.file(
