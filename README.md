@@ -35,9 +35,8 @@ library(MotifDb)
 library(BiocParallel)
 library(BSgenome)
 
+### **Step 3 — Read Variants from BED File**
 
-
-Step 3 — Read Variants from BED File
 snps <- snps.from.file(
   file = "Motif_Breaker - SKT.bed",
   format = "bed",
