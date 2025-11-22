@@ -29,6 +29,7 @@ It reads a BED-style variant file, extracts alleles automatically, evaluates TF 
 
 
 ### **Steps**
+```R
 **Step 1 — Load Required Libraries**
 library(motifbreakR)
 library(BSgenome.Hsapiens.UCSC.hg38)
